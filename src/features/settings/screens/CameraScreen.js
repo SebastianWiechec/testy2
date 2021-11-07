@@ -49,11 +49,24 @@ export const CameraScreen = ({ navigation }) => {
   return (
     <ProfileCamera
       ref={(camera) => (cameraRef.current = camera)}
-      type={Camera.Constants.Type.front}
+      type={Camera.Constants.Type.back}
     >
-      <TouchableOpacity onPress={snap}>
-        <InnerSnap />
-      </TouchableOpacity>
+      <InnerSnap>
+        {/* <TouchableOpacity  /> */}
+        <TouchableOpacity
+          onPress={snap}
+          style={{
+            position:"absolute",
+            width: 70,
+            height: 70,
+            bottom: 0,
+            borderRadius: 50,
+            backgroundColor: '#fff',
+            alignSelf:"center",
+          }}
+        />
+      </InnerSnap>
+
     </ProfileCamera>
   );
 };
