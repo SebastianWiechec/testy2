@@ -1,11 +1,14 @@
-/* eslint-disable no-unused-vars */
 import camelize from 'camelize';
 import { host, isMock } from '../../utils/env';
 
 export const locationRequest = (searchTerm) => {
-  return fetch(`${host}`).then((res) => {
-    return res.json();
-  });
+  // console.log(searchTerm, 'locationRequest');
+  return fetch(`${host}/geocode?city=${searchTerm}&mock=${isMock}`).then(
+    (res) => {
+      //  console.log(res, 'locationRequest');
+      return res.json();
+    }
+  );
 };
 
 export const locationTransform = (result) => {

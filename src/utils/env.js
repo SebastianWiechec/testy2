@@ -6,9 +6,9 @@ import { Platform } from 'react-native';
 
 // To test on Android device in development mode, liveHost URL will be used instead.
 
-//const liveHost = 'https://us-central1-yummeals-e8d3d.cloudfunctions.net';
-const liveHost =
-  'https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=ice-cream&location=51.207067,16.23309876&radius=1000&key=AIzaSyBZqBqmfgvSILa3OFHkvgwTI_3U2H4WtBk';
+const liveHost = 'https://us-central1-icespotting.cloudfunctions.net';
+//const liveHost =
+// 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=ice-cream&location=51.207067,16.23309876&radius=1000&key=AIzaSyBZqBqmfgvSILa3OFHkvgwTI_3U2H4WtBk';
 const localHost = 'http://localhost:5001/yummeals-e8d3d/us-central1';
 
 export const isAndroid = Platform.OS === 'android';
