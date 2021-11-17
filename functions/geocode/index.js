@@ -16,7 +16,7 @@ module.exports.geocodeRequest = (request, response, client) => {
         address: city,
         key: 'AIzaSyBZqBqmfgvSILa3OFHkvgwTI_3U2H4WtBk',
       },
-      timeout: 2000,
+      timeout: 5000,
     })
     .then((res) => {
       return response.json(res.data);

@@ -35,14 +35,15 @@ module.exports.placesRequest = (request, response, client) => {
     .placesNearby({
       params: {
         location,
-        radius: 10000,
-        type: 'restaurant|cafe|bar|food|point_of_interest|store|establishment',
-        keyword: 'ice cream',
+        radius: 9000,
+        type: ['cafe', 'bar', 'restaurant', 'ice-cream parlour', 'food'],
+        keyword: 'ice-cream parlour',
         key: 'AIzaSyBZqBqmfgvSILa3OFHkvgwTI_3U2H4WtBk',
       },
-      timeout: 2000,
+      timeout: 5000,
     })
     .then((res) => {
+      console.log(res);
       res.data.results = res.data.results.map(addGoogleImage);
       return response.json(res.data);
     })
