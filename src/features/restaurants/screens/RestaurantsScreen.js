@@ -15,6 +15,7 @@ import { RestaurantInfoCard } from '../components/RestaurantInfoCard';
 import { LocationContext } from '../../../services/location/LocationContext';
 import { RestaurantsContext } from '../../../services/restaurants/RestaurantsContext';
 import { FavouritesContext } from '../../../services/favourites/FavouritesContext';
+import { AuthenticationContext } from '../../../services/authentication/AuthenticationContext';
 
 const LoadingContainer = styled(View)`
   position: absolute;
@@ -27,11 +28,14 @@ const Loading = styled(ActivityIndicator)`
 `;
 
 export const RestaurantsScreen = ({ navigation }) => {
+  const { placeId } = useContext(AuthenticationContext);
   const { error: locationError } = useContext(LocationContext);
   const { restaurants, isLoading, error } = useContext(RestaurantsContext);
   const { favourites } = useContext(FavouritesContext);
   const [isToggled, setIsToggled] = useState(false);
   const hasError = !!error || !!locationError;
+
+  console.log(placeId, 'placeId restSc');
 
   return (
     <SafeArea>

@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { RestaurantsNavigator } from './RestaurantsNavigator';
 import { SettingsNavigator } from './SettingsNavigator';
+import { AdminNavigator } from './AdminNavigator';
 import { CheckoutNavigator } from './CheckoutNavigator';
 import { MapScreen } from '../../features/map/screens/MapScreen';
 import { colors } from '../../infrastructure/theme/colors';
@@ -18,6 +19,7 @@ const TAB_ICON = {
   Checkout: 'cart',
   Map: 'map',
   Settings: 'settings',
+  Admin: 'receipt-sharp',
 };
 
 const Tab = createBottomTabNavigator();
@@ -48,6 +50,7 @@ export const AppNavigator = () => (
             <Tab.Screen name="Checkout" component={CheckoutNavigator} />
             <Tab.Screen name="Map" component={MapScreen} />
             <Tab.Screen name="Settings" component={SettingsNavigator} />
+            <Tab.Screen name="Admin" component={AdminNavigator} />
           </Tab.Navigator>
         </CartContextProvider>
       </RestaurantsContextProvider>

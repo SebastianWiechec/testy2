@@ -1,15 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useState, useContext, useEffect } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { List, Divider } from 'react-native-paper';
-
 import { SafeArea } from '../../../components/SafeArea/SafeArea';
 import { Spacer } from '../../../components/Spacer/Spacer';
-import { RestaurantInfoCard } from '../components/RestaurantInfoCard';
-import { OrderButton } from '../components/RestaurantList.styles';
-
 import { CartContext } from '../../../services/cart/CartContext';
 import * as firebase from 'firebase';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyBZqBqmfgvSILa3OFHkvgwTI_3U2H4WtBk', //'AIzaSyAMOQP9M0--a-l6JDPF5wIXxSHtTd58BLw',
   authDomain: 'icespotting.firebaseapp.com', //'yummeals-e8d3d.firebaseapp.com',
@@ -23,60 +21,57 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-export const RestaurantDetailScreen = ({ route, navigation }) => {
+export const MenuScreen = ({ route, navigation }) => {
   const [breakfastExpanded, setBreakfastExpanded] = useState(false);
   const [lunchExpanded, setLunchExpanded] = useState(false);
   const [dinnerExpanded, setDinnerExpanded] = useState(false);
   const [drinksExpanded, setDrinksExpanded] = useState(false);
-
-  const [icecreams, setIcecreams] = useState([]);
-  const [milkshake, setMilkshake] = useState(false);
   const { addToCart } = useContext(CartContext);
-
-  const { restaurant } = route.params;
-  console.log(restaurant.placeId, 'restaurant resDet');
-  console.log(icecreams);
-
   var db = firebase.firestore();
+  const colref = db.collection('Menu');
 
   useEffect(() => {
-    const fetchData = async () => {
-      db.collection('Menu')
-        .doc(restaurant.placeId)
-        .get()
-        .then((querySnapshot) => {
-          const result = querySnapshot.data();
-          if (result) {
-            setIcecreams(result.icecreams);
-            setMilkshake(result.milkshake);
-          }
-          //console.log(querySnapshot.data())
-        });
+    // console.log(colref);
+
+    const fetchCat = async () => {
+      const querySelector = await colref.get();
+      const cats = querySelector.docs.map((item) => item.data());
+      console.log(cats[0].collection('lody'));
     };
 
-    fetchData();
+    db.collection('Menu')
+      .doc('ChIJvQ6JzxUND0cR7zJYqvyDxOc')
+
+      //1miUC5Qv0sqX8TBkYS2G
+      // .collection('smak')
+      // .doc('1miUC5Qv0sqX8TBkYS2G') //1miUC5Qv0sqX8TBkYS2G
+      .get()
+      .then((querySnapshot) => {
+        console.log(querySnapshot.data());
+        // querySnapshot.forEach((doc) => {
+        //   console.log(doc.id, ' => ', doc.data());
+        // });
+      });
+
+    // fetchCat();
   }, []);
+
+  // const { restaurant } = route.params;
 
   return (
     <SafeArea>
       <ScrollView>
-        <RestaurantInfoCard restaurant={restaurant} />
         <List.Accordion
-          title="Icecremas"
+          title="Breakfast"
           left={(props) => <List.Icon {...props} icon="food-croissant" />}
           expanded={breakfastExpanded}
           onPress={() => setBreakfastExpanded(!breakfastExpanded)}
         >
-          {icecreams.length ? (
-            icecreams?.map((el) => (
-              <View>
-                <List.Item title={el?.toString()} />
-                <Divider />
-              </View>
-            ))
-          ) : (
-            <Text>Lipa</Text>
-          )}
+          <List.Item title="Eggs Benedict" />
+          <Divider />
+          <List.Item title="Blueberry Pancakes" />
+          <Divider />
+          <List.Item title="Cinnamon Buns" />
         </List.Accordion>
         <Divider />
         <List.Accordion
@@ -85,13 +80,11 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
           expanded={lunchExpanded}
           onPress={() => setLunchExpanded(!lunchExpanded)}
         >
-          {milkshake.length &&
-            milkshake?.map((el) => (
-              <View>
-                <List.Item title={el?.toString()} />
-                <Divider />
-              </View>
-            ))}
+          <List.Item title="Smørrebrød" />
+          <Divider />
+          <List.Item title="Steak Burger" />
+          <Divider />
+          <List.Item title="Pumpkin Soup" />
         </List.Accordion>
         <Divider />
         <List.Accordion
@@ -126,18 +119,7 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
           <List.Item title="Coke" />
         </List.Accordion>
       </ScrollView>
-      <Spacer position="bottom" size="large">
-        <OrderButton
-          icon="cash-usd"
-          mode="contained"
-          onPress={() => {
-            addToCart({ item: 'special', price: 1299 }, restaurant);
-            navigation.navigate('Checkout');
-          }}
-        >
-          Order Special For Only $12.99!
-        </OrderButton>
-      </Spacer>
+      <Spacer position="bottom" size="large" />
     </SafeArea>
   );
 };
