@@ -24,7 +24,7 @@ export const AccountScreen = ({ navigation }) => {
           source={require('../../../../assets/animations/ice-cream-lot.json')}
         />
       </LottieAnimationWrapper>
-      <Title variant="caption">YumMeals</Title>
+      <Title variant="caption">Icespotting</Title>
       <AccountContainer>
         <AuthButton
           icon="lock-open-outline"

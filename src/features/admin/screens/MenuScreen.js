@@ -9,12 +9,12 @@ import { CartContext } from '../../../services/cart/CartContext';
 import * as firebase from 'firebase';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBZqBqmfgvSILa3OFHkvgwTI_3U2H4WtBk', //'AIzaSyAMOQP9M0--a-l6JDPF5wIXxSHtTd58BLw',
-  authDomain: 'icespotting.firebaseapp.com', //'yummeals-e8d3d.firebaseapp.com',
-  projectId: 'icespotting', //'yummeals-e8d3d',
-  storageBucket: 'icespotting.appspot.com', //'yummeals-e8d3d.appspot.com',
-  messagingSenderId: '729160709089', //'572941448591',
-  appId: '1:729160709089:android:7f55c031a5957c4cf258a0', //'1:572941448591:web:9993d5c64e60e32232c7fa',
+  apiKey: 'AIzaSyBZqBqmfgvSILa3OFHkvgwTI_3U2H4WtBk',
+  authDomain: 'icespotting.firebaseapp.com',
+  projectId: 'icespotting',
+  storageBucket: 'icespotting.appspot.com',
+  messagingSenderId: '729160709089',
+  appId: '1:729160709089:android:7f55c031a5957c4cf258a0',
 };
 
 if (!firebase.apps.length) {

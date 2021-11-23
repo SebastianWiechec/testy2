@@ -9,7 +9,7 @@ import { Platform } from 'react-native';
 const liveHost = 'https://us-central1-icespotting.cloudfunctions.net';
 //const liveHost =
 // 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=ice-cream&location=51.207067,16.23309876&radius=1000&key=AIzaSyBZqBqmfgvSILa3OFHkvgwTI_3U2H4WtBk';
-const localHost = 'http://localhost:5001/yummeals-e8d3d/us-central1';
+const localHost = 'http://localhost:5001/yummeals-e8d3d/us-central1'; // do zmiany
 
 export const isAndroid = Platform.OS === 'android';
 export const isDevelopment = process.env.NODE_ENV === 'development';
