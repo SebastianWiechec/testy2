@@ -16,3 +16,4 @@ package.json
 functions/package.json
 functions/package-lock.json
 firebase-debug.log
+*.lock
