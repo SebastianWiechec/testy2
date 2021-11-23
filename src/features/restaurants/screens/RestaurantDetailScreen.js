@@ -62,7 +62,7 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
       <ScrollView>
         <RestaurantInfoCard restaurant={restaurant} />
         <List.Accordion
-          title="Icecremas"
+          title="Icecreams"
           left={(props) => <List.Icon {...props} icon="food-croissant" />}
           expanded={breakfastExpanded}
           onPress={() => setBreakfastExpanded(!breakfastExpanded)}
@@ -75,13 +75,13 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
               </View>
             ))
           ) : (
-            <Text>Lipa</Text>
+            <Text>Ta lodziarnia z nami nie współpracuje jeszcze !</Text>
           )}
         </List.Accordion>
         <Divider />
         <List.Accordion
-          title="Lunch"
-          left={(props) => <List.Icon {...props} icon="hamburger" />}
+          title="MilkShakes"
+          left={(props) => <List.Icon {...props} icon="local-drink" />}
           expanded={lunchExpanded}
           onPress={() => setLunchExpanded(!lunchExpanded)}
         >
@@ -93,38 +93,6 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
               </View>
             ))}
         </List.Accordion>
-        <Divider />
-        <List.Accordion
-          title="Dinner"
-          left={(props) => <List.Icon {...props} icon="glass-cocktail" />}
-          expanded={dinnerExpanded}
-          onPress={() => setDinnerExpanded(!dinnerExpanded)}
-        >
-          <List.Item title="Spaghetti Carbonara" />
-          <Divider />
-          <List.Item title="Veal Cutlet with Chicken Mushroom Rotini" />
-          <Divider />
-          <List.Item title="Steak Frites" />
-        </List.Accordion>
-        <Divider />
-        <List.Accordion
-          title="Drinks"
-          left={(props) => <List.Icon {...props} icon="coffee" />}
-          expanded={drinksExpanded}
-          onPress={() => setDrinksExpanded(!drinksExpanded)}
-        >
-          <List.Item title="Americano" />
-          <Divider />
-          <List.Item title="Cappuccino" />
-          <Divider />
-          <List.Item title="Mocha Latte" />
-          <Divider />
-          <List.Item title="Earl Grey" />
-          <Divider />
-          <List.Item title="Maghrebi Mint Tea" />
-          <Divider />
-          <List.Item title="Coke" />
-        </List.Accordion>
       </ScrollView>
       <Spacer position="bottom" size="large">
         <OrderButton
@@ -135,7 +103,7 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
             navigation.navigate('Checkout');
           }}
         >
-          Order Special For Only $12.99!
+          Zestaw specjalny tylko 12 PLN!
         </OrderButton>
       </Spacer>
     </SafeArea>
