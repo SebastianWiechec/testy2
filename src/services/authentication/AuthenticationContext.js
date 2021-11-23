@@ -21,11 +21,20 @@ export const AuthenticationContext = createContext();
 export const AuthenticationContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
-  const [placeId, setPlaceId] = useState(null);
+  const [userPlaceId, setPlaceId] = useState(null);
   const [error, setError] = useState(null);
 
   firebase.auth().onAuthStateChanged((usr) => {
     if (usr) {
+      // console.log(usr.uid, 'Auth')
+      db.collection('Admins')
+        .doc(usr.uid)
+        .get()
+        .then((querySnapshot) => {
+          if (querySnapshot.data()) {
+            setPlaceId(querySnapshot.data().place_id);
+          }
+        });
       setUser(usr);
       setIsLoading(false);
     }
@@ -35,8 +44,6 @@ export const AuthenticationContextProvider = ({ children }) => {
     setIsLoading(true);
     loginRequest(email, password)
       .then((u) => {
-        // console.log(u.user.uid, "user authCon")
-
         db.collection('Admins')
           .doc(u.user.uid)
           .get()
@@ -44,10 +51,6 @@ export const AuthenticationContextProvider = ({ children }) => {
             if (querySnapshot.data()) {
               setPlaceId(querySnapshot.data().place_id);
             }
-            // console.log(querySnapshot.data())
-            // querySnapshot.forEach((doc) => {
-            //   console.log(doc.id, ' => ', doc.data());
-            // });
           });
 
         setUser(u);
@@ -90,7 +93,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         isAuthenticated: !!user,
         isLoading,
         user,
-        placeId,
+        userPlaceId,
         error,
         onLogin,
         onRegister,

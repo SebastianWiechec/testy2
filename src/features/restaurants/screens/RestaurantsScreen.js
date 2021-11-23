@@ -28,14 +28,14 @@ const Loading = styled(ActivityIndicator)`
 `;
 
 export const RestaurantsScreen = ({ navigation }) => {
-  const { placeId } = useContext(AuthenticationContext);
+  const { userPlaceId } = useContext(AuthenticationContext);
   const { error: locationError } = useContext(LocationContext);
   const { restaurants, isLoading, error } = useContext(RestaurantsContext);
   const { favourites } = useContext(FavouritesContext);
   const [isToggled, setIsToggled] = useState(false);
   const hasError = !!error || !!locationError;
 
-  console.log(placeId, 'placeId restSc');
+  console.log(userPlaceId, 'placeId restSc');
 
   return (
     <SafeArea>
@@ -66,7 +66,10 @@ export const RestaurantsScreen = ({ navigation }) => {
             return (
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate('RestaurantDetail', { restaurant: item })
+                  navigation.navigate('RestaurantDetail', {
+                    restaurant: item,
+                    userPlaceId: userPlaceId,
+                  })
                 }
               >
                 <Spacer position="bottom" size="large">
