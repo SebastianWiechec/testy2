@@ -29,10 +29,11 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
 
   const [icecreams, setIcecreams] = useState([]);
   const [milkshake, setMilkshake] = useState([]);
+  const [special, setSpecial] = useState(12);
   const { addToCart } = useContext(CartContext);
 
   const { restaurant, userPlaceId } = route.params;
-  // console.log(restaurant.placeId, 'restaurant resDet');
+  console.log(special, 'restaurant resDet');
   // console.log(userPlaceId, 'restaurant resDet');
 
   var db = firebase.firestore();
@@ -49,8 +50,9 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
             if (result) {
               setIcecreams(result.icecreams);
               setMilkshake(result.milkshake);
+              setSpecial(result.Special);
             }
-            //console.log(querySnapshot.data())
+            // console.log(querySnapshot.data())
           });
       }
     };
@@ -59,21 +61,38 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
   }, []);
 
   const changeIcecreams = async (value, key) => {
-    let newIcecreams = icecreams;
-    newIcecreams[key] = value;
-    setIcecreams(newIcecreams);
     db.collection('Menu')
       .doc(restaurant.placeId)
-      .update({ icecreams: newIcecreams });
+      .update({ icecreams: icecreams });
   };
 
   const setNewIcecreams = (value, key) => {
-    let newIcecreams = icecreams;
-    newIcecreams[key] = value;
-    console.log(newIcecreams);
+    let newIcecreams = icecreams.map((el, index) =>
+      index === key ? value : el
+    );
+
     setIcecreams(newIcecreams);
   };
-  console.log(icecreams, 'icecreams');
+
+  const changeMilkshakes = async (value, key) => {
+    db.collection('Menu')
+      .doc(restaurant.placeId)
+      .update({ milkshake: milkshake });
+  };
+
+  const setNewMilkshakes = (value, key) => {
+    let newMilkshakes = milkshake.map((el, index) =>
+      index === key ? value : el
+    );
+
+    setMilkshake(newMilkshakes);
+  };
+
+  const changeSpecial = async (value) => {
+    db.collection('Menu').doc(restaurant.placeId).update({ Special: value });
+  };
+
+  //console.log(icecreams, 'icecreams');
   return (
     <SafeArea>
       <ScrollView>
@@ -116,25 +135,54 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
           onPress={() => setLunchExpanded(!lunchExpanded)}
         >
           {milkshake.length &&
-            milkshake?.map((el) => (
-              <View>
-                <List.Item title={el?.toString()} />
-                <Divider />
-              </View>
-            ))}
+            milkshake?.map((el, key) =>
+              restaurant.placeId == userPlaceId ? (
+                <View key={key}>
+                  <TextInput
+                    style={{ marginRight: 7, marginVertical: 5 }}
+                    value={el?.toString()}
+                    onChangeText={(value) => setNewMilkshakes(value, key)}
+                    onEndEditing={async (value) =>
+                      await changeMilkshakes(value.nativeEvent.text, key)
+                    }
+                  />
+                </View>
+              ) : (
+                <View>
+                  <List.Item title={el?.toString()} />
+                  <Divider />
+                </View>
+              )
+            )}
         </List.Accordion>
       </ScrollView>
       <Spacer position="bottom" size="large">
-        <OrderButton
-          icon="cash-usd"
-          mode="contained"
-          onPress={() => {
-            addToCart({ item: 'special', price: 1299 }, restaurant);
-            navigation.navigate('Checkout');
-          }}
-        >
-          Zestaw specjalny tylko 12 PLN!
-        </OrderButton>
+        {restaurant.placeId == userPlaceId ? (
+          <TextInput
+            label="Special icecream price"
+            style={{ marginHorizontal: 10, marginVertical: 10 }}
+            value={special}
+            numeric
+            onChangeText={(value) => setSpecial(value)}
+            onEndEditing={async (value) =>
+              await changeSpecial(value.nativeEvent.text)
+            }
+          />
+        ) : (
+          <OrderButton
+            icon="cash-usd"
+            mode="contained"
+            onPress={() => {
+              addToCart(
+                { item: 'special', price: parseFloat(special) },
+                restaurant
+              );
+              navigation.navigate('Checkout');
+            }}
+          >
+            Zestaw specjalny tylko {special} PLN!
+          </OrderButton>
+        )}
       </Spacer>
     </SafeArea>
   );
