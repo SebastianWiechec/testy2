@@ -16,6 +16,7 @@ import { LocationContext } from '../../../services/location/LocationContext';
 import { RestaurantsContext } from '../../../services/restaurants/RestaurantsContext';
 import { FavouritesContext } from '../../../services/favourites/FavouritesContext';
 import { AuthenticationContext } from '../../../services/authentication/AuthenticationContext';
+import { SearchIcecream } from '../components/SearchIcecream';
 
 const LoadingContainer = styled(View)`
   position: absolute;
@@ -48,6 +49,7 @@ export const RestaurantsScreen = ({ navigation }) => {
         isFavouritesToggled={isToggled}
         onFavouritesToggle={() => setIsToggled(!isToggled)}
       />
+      <SearchIcecream />
       {isToggled && (
         <FavouritesBar
           favourites={favourites}

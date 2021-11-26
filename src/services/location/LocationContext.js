@@ -9,6 +9,7 @@ export const LocationContextProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [location, setLocation] = useState(null);
   const [keyword, setKeyword] = useState('Legnica');
+  const [iceCream, setIceCream] = useState('');
 
   const onSearch = (searchKeyword) => {
     setIsLoading(true);
@@ -34,7 +35,14 @@ export const LocationContextProvider = ({ children }) => {
 
   return (
     <LocationContext.Provider
-      value={{ isLoading, error, location, keyword, search: onSearch }}
+      value={{
+        isLoading,
+        error,
+        location,
+        keyword,
+        iceCream,
+        search: onSearch,
+      }}
     >
       {children}
     </LocationContext.Provider>

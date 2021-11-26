@@ -4,7 +4,9 @@ const { geocodeRequest } = require('./geocode');
 const { placesRequest } = require('./places');
 const { payRequest } = require('./pay');
 const { Client } = require('@googlemaps/google-maps-services-js');
-const stripeClient = require('stripe')('qazxswedc');
+const stripeClient = require('stripe')(
+  'sk_test_51K08kLLp1ZWXnRib1MdShs8fupjMsf6zsEGmXMXCkC7NRYrmCh08t5gJnCCwz89I9aFXP0GvUCTRWRwMxc0QXEZA00sb5KwYtA'
+);
 
 const googleClient = new Client({});
 
