@@ -16,6 +16,11 @@ export const LocationContextProvider = ({ children }) => {
     setKeyword(searchKeyword);
   };
 
+  const onSearchIceCream = (iceCreamName) => {
+    //setIsLoading(true);
+    setIceCream(iceCreamName);
+  };
+
   useEffect(() => {
     if (!keyword.length) {
       return; // Do nothing
@@ -42,6 +47,7 @@ export const LocationContextProvider = ({ children }) => {
         keyword,
         iceCream,
         search: onSearch,
+        searchIceCream: onSearchIceCream,
       }}
     >
       {children}

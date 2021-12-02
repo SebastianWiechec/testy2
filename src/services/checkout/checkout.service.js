@@ -8,8 +8,7 @@ const stripe = createStripe(
 export const cardTokenRequest = (card) => stripe.createToken({ card });
 
 export const payRequest = (token, amount, name) => {
-  let stringAmount = amount.toString() + ' zł';
-  // console.log(stringAmount, 'payRequest');
+  amount = amount * 100;
   return fetch(`${host}/pay`, {
     body: JSON.stringify({ token, amount, name }),
     method: 'POST',

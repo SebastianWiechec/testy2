@@ -16,3 +16,12 @@ export const isDevelopment = process.env.NODE_ENV === 'development';
 export const isMock = false; // Change isMock to true during development to limit API requests to Google
 //export const host = !isDevelopment || isAndroid ? liveHost : localHost;
 export const host = liveHost;
+
+export const firebaseConfig = {
+  apiKey: 'AIzaSyBZqBqmfgvSILa3OFHkvgwTI_3U2H4WtBk',
+  authDomain: 'icespotting.firebaseapp.com',
+  projectId: 'icespotting',
+  storageBucket: 'icespotting.appspot.com',
+  messagingSenderId: '729160709089',
+  appId: '1:729160709089:android:7f55c031a5957c4cf258a0',
+};

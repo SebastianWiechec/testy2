@@ -41,7 +41,6 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
   useEffect(() => {
     const fetchData = async () => {
       if (!icecreams.length && !milkshake.length) {
-        console.log('puste');
         db.collection('Menu')
           .doc(restaurant.placeId)
           .get()

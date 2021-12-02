@@ -5,7 +5,7 @@ const { mocks, addMockImage } = require('./mock');
 
 const addGoogleImage = (restaurant) => {
   const ref = restaurant.photos[0].photo_reference;
-  console.log(ref);
+  // console.log(ref);
   if (!ref) {
     restaurant.photos = [
       'https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg',
@@ -43,7 +43,7 @@ module.exports.placesRequest = (request, response, client) => {
       timeout: 5000,
     })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       res.data.results = res.data.results.map(addGoogleImage);
       return response.json(res.data);
     })

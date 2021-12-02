@@ -4,6 +4,7 @@ import { host, isMock } from '../../utils/env';
 export const restaurantsRequest = (location) => {
   return fetch(`${host}/placesNearby?location=${location}&mock=${isMock}`).then(
     (res) => {
+      console.log(res, 'restaurantsRequest');
       return res.json();
     }
   );

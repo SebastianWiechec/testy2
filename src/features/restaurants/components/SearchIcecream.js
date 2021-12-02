@@ -11,7 +11,7 @@ const SearchContainer = styled(View)`
 `;
 
 export const SearchIcecream = (props) => {
-  const { iceCream, search } = useContext(LocationContext);
+  const { iceCream, searchIceCream } = useContext(LocationContext);
   const [searchKeyword, setSearchKeyword] = useState(iceCream);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export const SearchIcecream = (props) => {
         placeholder="Search for a flavour"
         value={searchKeyword}
         icon="ice-cream"
-        onSubmitEditing={() => search(searchKeyword)}
+        onSubmitEditing={() => searchIceCream(searchKeyword)}
         onChangeText={(text) => {
           setSearchKeyword(text);
         }}
