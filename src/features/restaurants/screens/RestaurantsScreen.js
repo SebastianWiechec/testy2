@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { ActivityIndicator, Colors } from 'react-native-paper';
 import styled from 'styled-components/native';
@@ -34,7 +34,12 @@ export const RestaurantsScreen = ({ navigation }) => {
   const { restaurants, isLoading, error } = useContext(RestaurantsContext);
   const { favourites } = useContext(FavouritesContext);
   const [isToggled, setIsToggled] = useState(false);
+  const [selectedRestaurants, setSelectedRestaurants] = useState(restaurants);
   const hasError = !!error || !!locationError;
+
+  useEffect(() => {
+    setSelectedRestaurants(restaurants);
+  }, [restaurants]);
 
   // console.log(userPlaceId, 'placeId restSc');
 
@@ -63,7 +68,7 @@ export const RestaurantsScreen = ({ navigation }) => {
       )}
       {!hasError && (
         <RestaurantList
-          data={restaurants}
+          data={selectedRestaurants}
           renderItem={({ item }) => {
             return (
               <TouchableOpacity

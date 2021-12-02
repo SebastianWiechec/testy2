@@ -50,24 +50,24 @@ export const RestaurantsContextProvider = ({ children }) => {
       '1 restaurantsWithIcecream'
     );
     if (restaurantsWithIcecream.length && restaurants.length) {
-      console.log(restaurantsWithIcecream, '1 restaurantsWithIcecream');
       let res = restaurants.filter((el) =>
         restaurantsWithIcecream.includes(el.placeId)
       );
+      console.log(res, '2 restaurantsWithIcecream');
       setRestaurants(res);
     }
-  }, [restaurantsWithIcecream]);
+  }, [restaurantsWithIcecream, restaurants]);
 
   useEffect(() => {
     if (location) {
       const locationString = `${location.lat},${location.lng}`;
       retrieveRestaurants(locationString);
     }
-  }, [location, iceCream]);
+  }, [location]);
 
   useEffect(() => {
-    setRestaurantsWithIcecream([]);
-    const fetchData = () => {
+    //  setRestaurantsWithIcecream([]);
+    const fetchData = async () => {
       let restaurantsId = [];
       if (iceCream != '') {
         db.collection('Menu')
@@ -87,7 +87,7 @@ export const RestaurantsContextProvider = ({ children }) => {
     fetchData();
   }, [iceCream]);
 
-  // console.log(restaurantsWithIcecream, iceCream);
+  console.log(restaurantsWithIcecream, iceCream);
   // console.log(restaurants, iceCream, 'restaurants');
 
   return (
