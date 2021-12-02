@@ -56,17 +56,16 @@ export const CameraScreen = ({ navigation }) => {
         <TouchableOpacity
           onPress={snap}
           style={{
-            position:"absolute",
+            position: 'absolute',
             width: 70,
             height: 70,
             bottom: 0,
             borderRadius: 50,
             backgroundColor: '#fff',
-            alignSelf:"center",
+            alignSelf: 'center',
           }}
         />
       </InnerSnap>
-
     </ProfileCamera>
   );
 };

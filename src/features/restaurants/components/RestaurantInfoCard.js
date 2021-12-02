@@ -1,7 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
+import { IconButton } from 'react-native-paper';
 import { SvgXml } from 'react-native-svg';
-
+import { useNavigation } from '@react-navigation/native';
 import { Spacer } from '../../../components/Spacer/Spacer';
 import { CustomText as Text } from '../../../components/CustomText/CustomText';
 import { Favourite } from '../../../components/Favourite/Favourite';
@@ -21,6 +22,7 @@ import {
 } from './RestaurantInfoCard.styles';
 
 export const RestaurantInfoCard = ({ restaurant = {} }) => {
+  const navigation = useNavigation();
   const {
     name = 'Sick Eats',
     icon = 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
@@ -67,7 +69,20 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
             </Spacer>
           </OperationStatus>
         </Section>
-        <Address>{address}</Address>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
+        >
+          <Address>{address}</Address>
+          <IconButton
+            onPress={() => navigation.navigate('Camera')}
+            icon="camera"
+            style={{ alignSelf: 'flex-end' }}
+          />
+        </View>
       </Info>
     </RestaurantCard>
   );
