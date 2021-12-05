@@ -33,7 +33,7 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
   const { addToCart } = useContext(CartContext);
 
   const { restaurant, userPlaceId } = route.params;
-  console.log(special, 'restaurant resDet');
+  // console.log(special, 'restaurant resDet');
   // console.log(userPlaceId, 'restaurant resDet');
 
   var db = firebase.firestore();

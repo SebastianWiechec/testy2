@@ -50,7 +50,7 @@ export const AppNavigator = () => (
             <Tab.Screen name="Checkout" component={CheckoutNavigator} />
             <Tab.Screen name="Map" component={MapScreen} />
             <Tab.Screen name="Settings" component={SettingsNavigator} />
-            <Tab.Screen name="Admin" component={AdminNavigator} />
+            {/* // <Tab.Screen name="Admin" component={AdminNavigator} /> */}
           </Tab.Navigator>
         </CartContextProvider>
       </RestaurantsContextProvider>

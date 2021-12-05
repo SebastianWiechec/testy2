@@ -78,7 +78,9 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
         >
           <Address>{address}</Address>
           <IconButton
-            onPress={() => navigation.navigate('Camera')}
+            onPress={() =>
+              navigation.navigate('Camera', { userPlaceId: restaurant.placeId })
+            }
             icon="camera"
             style={{ alignSelf: 'flex-end' }}
           />

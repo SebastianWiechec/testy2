@@ -30,16 +30,16 @@ const Loading = styled(ActivityIndicator)`
 
 export const RestaurantsScreen = ({ navigation }) => {
   const { userPlaceId } = useContext(AuthenticationContext);
-  const { error: locationError } = useContext(LocationContext);
+  const { error: locationError, location } = useContext(LocationContext);
   const { restaurants, isLoading, error } = useContext(RestaurantsContext);
   const { favourites } = useContext(FavouritesContext);
   const [isToggled, setIsToggled] = useState(false);
-  const [selectedRestaurants, setSelectedRestaurants] = useState(restaurants);
+  //const [selectedRestaurants, setSelectedRestaurants] = useState(restaurants);
   const hasError = !!error || !!locationError;
 
-  useEffect(() => {
-    setSelectedRestaurants(restaurants);
-  }, [restaurants]);
+  // useEffect(() => {
+  //   setSelectedRestaurants(restaurants);
+  // }, [restaurants]);
 
   // console.log(userPlaceId, 'placeId restSc');
 
@@ -54,7 +54,8 @@ export const RestaurantsScreen = ({ navigation }) => {
         isFavouritesToggled={isToggled}
         onFavouritesToggle={() => setIsToggled(!isToggled)}
       />
-      <SearchIcecream />
+      {location && <SearchIcecream />}
+
       {isToggled && (
         <FavouritesBar
           favourites={favourites}
@@ -68,7 +69,7 @@ export const RestaurantsScreen = ({ navigation }) => {
       )}
       {!hasError && (
         <RestaurantList
-          data={selectedRestaurants}
+          data={restaurants}
           renderItem={({ item }) => {
             return (
               <TouchableOpacity

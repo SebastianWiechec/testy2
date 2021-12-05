@@ -24,16 +24,43 @@ export const RestaurantsContextProvider = ({ children }) => {
 
   var db = firebase.firestore();
 
-  const retrieveRestaurants = (loc) => {
+  const getRestaurantsWithIcecreams = async (results) => {
+    // console.log(results, 'getRestaurantsWithIcecreams');
+    let restaurantsId = [];
+    db.collection('Menu')
+      .where('icecreams', 'array-contains-any', [iceCream.toLowerCase()])
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((documentSnapshot) => {
+          restaurantsId.push(documentSnapshot.id);
+        });
+        console.log(restaurantsId);
+        return restaurantsId;
+      })
+      .then(async (res) => {
+        let withIcecream = results.filter((el) => res.includes(el.placeId));
+        console.log(withIcecream, '2 restaurantsWithIcecream');
+        setError(null);
+        setIsLoading(false);
+        setRestaurants(withIcecream);
+      });
+  };
+
+  const retrieveRestaurants = async (loc) => {
     setIsLoading(true);
     setRestaurants([]);
 
     restaurantsRequest(loc)
       .then(restaurantsTransform)
-      .then((results) => {
-        setError(null);
-        setIsLoading(false);
-        setRestaurants(results);
+      .then(async (results) => {
+        const search = iceCream.trim();
+        if (search == '') {
+          setError(null);
+          setIsLoading(false);
+          setRestaurants(results);
+        } else {
+          await getRestaurantsWithIcecreams(results);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -42,53 +69,16 @@ export const RestaurantsContextProvider = ({ children }) => {
       });
   };
 
-  // const
   useEffect(() => {
-    console.log(
-      restaurantsWithIcecream.length,
-      restaurants.length,
-      '1 restaurantsWithIcecream'
-    );
-    if (restaurantsWithIcecream.length && restaurants.length) {
-      let res = restaurants.filter((el) =>
-        restaurantsWithIcecream.includes(el.placeId)
-      );
-      console.log(res, '2 restaurantsWithIcecream');
-      setRestaurants(res);
-    }
-  }, [restaurantsWithIcecream, restaurants]);
-
-  useEffect(() => {
-    if (location) {
-      const locationString = `${location.lat},${location.lng}`;
-      retrieveRestaurants(locationString);
-    }
-  }, [location]);
-
-  useEffect(() => {
-    //  setRestaurantsWithIcecream([]);
-    const fetchData = async () => {
-      let restaurantsId = [];
-      if (iceCream != '') {
-        db.collection('Menu')
-          .where('icecreams', 'array-contains-any', [iceCream])
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((documentSnapshot) => {
-              //console.log(documentSnapshot.id);
-              restaurantsId.push(documentSnapshot.id);
-            });
-          });
-
-        setRestaurantsWithIcecream(restaurantsId);
+    const getRestaurants = async () => {
+      if (location) {
+        const locationString = `${location.lat},${location.lng}`;
+        await retrieveRestaurants(locationString);
       }
     };
 
-    fetchData();
-  }, [iceCream]);
-
-  console.log(restaurantsWithIcecream, iceCream);
-  // console.log(restaurants, iceCream, 'restaurants');
+    getRestaurants();
+  }, [location, iceCream]);
 
   return (
     <RestaurantsContext.Provider value={{ restaurants, isLoading, error }}>
