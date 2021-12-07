@@ -7,6 +7,7 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 import { RestaurantsScreen } from '../../features/restaurants/screens/RestaurantsScreen';
 import { RestaurantDetailScreen } from '../../features/restaurants/screens/RestaurantDetailScreen';
+import { PhotoLibrary } from '../../features/restaurants/screens/PhotoLibrary';
 import { CameraScreen } from '../../features/settings/screens/CameraScreen';
 
 const RestaurantStack = createStackNavigator();
@@ -32,6 +33,12 @@ export const RestaurantsNavigator = ({ navigation, route }) => {
         headerMode="screen"
         name="Camera"
         component={CameraScreen}
+        options={{ headerMode: 'screen ' }}
+      />
+      <RestaurantStack.Screen
+        headerMode="screen"
+        name="PhotoLibrary"
+        component={PhotoLibrary}
         options={{ headerMode: 'screen ' }}
       />
     </RestaurantStack.Navigator>

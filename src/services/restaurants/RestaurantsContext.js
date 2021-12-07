@@ -17,7 +17,6 @@ if (!firebase.apps.length) {
 
 export const RestaurantsContextProvider = ({ children }) => {
   const [restaurants, setRestaurants] = useState([]);
-  const [restaurantsWithIcecream, setRestaurantsWithIcecream] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const { location, iceCream } = useContext(LocationContext);
@@ -25,21 +24,21 @@ export const RestaurantsContextProvider = ({ children }) => {
   var db = firebase.firestore();
 
   const getRestaurantsWithIcecreams = async (results) => {
-    // console.log(results, 'getRestaurantsWithIcecreams');
+    setRestaurants([]);
     let restaurantsId = [];
     db.collection('Menu')
-      .where('icecreams', 'array-contains-any', [iceCream.toLowerCase()])
+      .where('icecreams', 'array-contains-any', [iceCream.trim().toLowerCase()])
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((documentSnapshot) => {
           restaurantsId.push(documentSnapshot.id);
         });
-        console.log(restaurantsId);
+        // console.log(restaurantsId);
         return restaurantsId;
       })
       .then(async (res) => {
         let withIcecream = results.filter((el) => res.includes(el.placeId));
-        console.log(withIcecream, '2 restaurantsWithIcecream');
+        //  console.log(withIcecream, '2 restaurantsWithIcecream');
         setError(null);
         setIsLoading(false);
         setRestaurants(withIcecream);
@@ -47,13 +46,14 @@ export const RestaurantsContextProvider = ({ children }) => {
   };
 
   const retrieveRestaurants = async (loc) => {
+    //  setRestaurants([]);
     setIsLoading(true);
-    setRestaurants([]);
 
     restaurantsRequest(loc)
       .then(restaurantsTransform)
       .then(async (results) => {
-        const search = iceCream.trim();
+        let search = iceCream.trim().toString();
+        // console.log(search, "search")
         if (search == '') {
           setError(null);
           setIsLoading(false);
@@ -70,6 +70,7 @@ export const RestaurantsContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    setRestaurants([]);
     const getRestaurants = async () => {
       if (location) {
         const locationString = `${location.lat},${location.lng}`;

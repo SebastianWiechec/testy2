@@ -34,14 +34,14 @@ export const RestaurantsScreen = ({ navigation }) => {
   const { restaurants, isLoading, error } = useContext(RestaurantsContext);
   const { favourites } = useContext(FavouritesContext);
   const [isToggled, setIsToggled] = useState(false);
-  //const [selectedRestaurants, setSelectedRestaurants] = useState(restaurants);
+  const [selectedRestaurants, setSelectedRestaurants] = useState([]);
   const hasError = !!error || !!locationError;
 
-  // useEffect(() => {
-  //   setSelectedRestaurants(restaurants);
-  // }, [restaurants]);
+  useEffect(() => {
+    setSelectedRestaurants(restaurants);
+  }, [restaurants]);
 
-  // console.log(userPlaceId, 'placeId restSc');
+  // console.log(selectedRestaurants, 'selectedRestaurants restSc');
 
   return (
     <SafeArea>
@@ -69,8 +69,9 @@ export const RestaurantsScreen = ({ navigation }) => {
       )}
       {!hasError && (
         <RestaurantList
-          data={restaurants}
+          data={selectedRestaurants}
           renderItem={({ item }) => {
+            //  console.log(item.placeId, "item selRest")
             return (
               <TouchableOpacity
                 onPress={() =>
@@ -88,7 +89,7 @@ export const RestaurantsScreen = ({ navigation }) => {
               </TouchableOpacity>
             );
           }}
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item) => item.placeId}
         />
       )}
     </SafeArea>

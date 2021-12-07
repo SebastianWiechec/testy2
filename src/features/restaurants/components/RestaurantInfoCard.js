@@ -1,12 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
-import { IconButton } from 'react-native-paper';
+import { Button, IconButton } from 'react-native-paper';
 import { SvgXml } from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native';
 import { Spacer } from '../../../components/Spacer/Spacer';
 import { CustomText as Text } from '../../../components/CustomText/CustomText';
 import { Favourite } from '../../../components/Favourite/Favourite';
-
+import { MaterialIcons } from '@expo/vector-icons';
 import star from '../../../../assets/icons/star';
 import open from '../../../../assets/icons/open';
 
@@ -74,6 +74,8 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             width: '100%',
+            alignContent: 'center',
+            alignItems: 'center',
           }}
         >
           <Address>{address}</Address>
@@ -85,6 +87,19 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
             style={{ alignSelf: 'flex-end' }}
           />
         </View>
+        <Button
+          icon={() => (
+            <MaterialIcons name="photo-library" size={24} color="white" />
+          )}
+          mode="contained"
+          onPress={() =>
+            navigation.navigate('PhotoLibrary', {
+              userPlaceId: restaurant.placeId,
+            })
+          }
+        >
+          Zdjęcia klientów
+        </Button>
       </Info>
     </RestaurantCard>
   );
