@@ -3,7 +3,7 @@ const antwerp = require('./antwerp');
 const chicago = require('./chicago');
 const toronto = require('./toronto');
 const san_francisco = require('./san_francisco');
-const legnica = require('./legnica');
+const legnica = require('./legnicaRest');
 
 module.exports.mocks = {
   '51.219448,4.402464': antwerp,
