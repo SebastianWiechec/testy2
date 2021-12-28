@@ -8,7 +8,7 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { RestaurantsScreen } from '../../features/restaurants/screens/RestaurantsScreen';
 import { RestaurantDetailScreen } from '../../features/restaurants/screens/RestaurantDetailScreen';
 import { PhotoLibrary } from '../../features/restaurants/screens/PhotoLibrary';
-import { CameraScreen } from '../../features/settings/screens/CameraScreen';
+import { CameraScreen } from '../../features/restaurants/screens/CameraScreen';
 
 const RestaurantStack = createStackNavigator();
 

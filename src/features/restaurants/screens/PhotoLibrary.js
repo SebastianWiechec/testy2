@@ -1,32 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useContext, useEffect } from 'react';
-import { ScrollView, Text, View } from 'react-native';
-import { List, Divider, TextInput, Card } from 'react-native-paper';
-
-import { SafeArea } from '../../../components/SafeArea/SafeArea';
-import { Spacer } from '../../../components/Spacer/Spacer';
-import { RestaurantInfoCard } from '../components/RestaurantInfoCard';
+import React, { useState, useEffect } from 'react';
+import { FlatList, Text, View } from 'react-native';
 
 import { RestaurantCardCover } from '../components/RestaurantInfoCard.styles';
 
 import * as firebase from 'firebase';
 import { firebaseConfig } from '../../../utils/env';
-import { set } from 'react-native-reanimated';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-export const PhotoLibrary = ({ route, navigation }) => {
-  const [breakfastExpanded, setBreakfastExpanded] = useState(false);
-  const [lunchExpanded, setLunchExpanded] = useState(false);
-
-  const [icecreams, setIcecreams] = useState([]);
-  const [milkshake, setMilkshake] = useState([]);
+export const PhotoLibrary = ({ route }) => {
   const [photos, setPhotos] = useState([]);
 
   const { userPlaceId } = route.params;
-
-  var db = firebase.firestore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +44,7 @@ export const PhotoLibrary = ({ route, navigation }) => {
 
       await listFilesAndDirectories(ref).then(() => {
         setPhotos(photosUrls);
-        console.log('Finished listing');
+        // console.log('Finished listing');
       });
     };
 
@@ -69,11 +56,33 @@ export const PhotoLibrary = ({ route, navigation }) => {
   console.log(photos, 'photos');
   //console.log(photos.length, 'photos');
 
-  return (
-    <ScrollView>
-      {photos.map((el, key) => (
-        <RestaurantCardCover key={key} source={{ uri: el }} />
-      ))}
-    </ScrollView>
-  );
+  if (photos.length) {
+    return (
+      <FlatList
+        data={photos}
+        initialNumToRender={4}
+        removeClippedSubviews={true} // Unmount components when outside of window
+        maxToRenderPerBatch={1} // Reduce number in each render batch
+        updateCellsBatchingPeriod={100} // Increase time between renders
+        windowSize={5} // Reduce the window size
+        renderItem={({ item, index }) => (
+          <RestaurantCardCover key={index} source={{ uri: item }} />
+        )}
+      />
+    );
+  } else {
+    return (
+      <View
+        style={{
+          flex: 6,
+          alignSelf: 'center',
+          justifyContent: 'center',
+          alignContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text>Jeszcze nie ma żadnych zdjęć</Text>
+      </View>
+    );
+  }
 };
