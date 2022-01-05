@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
-const url = require('url');
-const functions = require('firebase-functions');
-const { mocks, addMockImage } = require('./mock');
+const url = require("url");
+const functions = require("firebase-functions");
+const { mocks, addMockImage } = require("./mock");
 
 const addGoogleImage = (restaurant) => {
   const ref = restaurant.photos[0].photo_reference;
   // console.log(ref);
   if (!ref) {
     restaurant.photos = [
-      'https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg',
+      "https://media.istockphoto.com/photos/delicious-ice-creams-are-ready-to-be-eaten-picture-id1051727906?b=1&k=20&m=1051727906&s=170667a&w=0&h=-cbFgu05ZKYHfvPi1HHngNQKDLtjeARaRngK9RZKrW8=",
     ];
     return restaurant;
   }
@@ -22,7 +22,7 @@ const addGoogleImage = (restaurant) => {
 
 module.exports.placesRequest = (request, response, client) => {
   const { location, mock } = url.parse(request.url, true).query;
-  if (mock === 'true') {
+  if (mock === "true") {
     const data = mocks[location];
     if (data) {
       data.results = data.results.map(addMockImage);
@@ -36,9 +36,9 @@ module.exports.placesRequest = (request, response, client) => {
       params: {
         location,
         radius: 9000,
-        type: ['cafe', 'bar', 'restaurant', 'ice-cream parlour', 'food'],
-        keyword: 'ice-cream parlour',
-        key: 'AIzaSyBZqBqmfgvSILa3OFHkvgwTI_3U2H4WtBk',
+        type: ["cafe", "bar", "restaurant", "ice-cream parlour", "food"],
+        keyword: "ice-cream parlour",
+        key: "AIzaSyBZqBqmfgvSILa3OFHkvgwTI_3U2H4WtBk",
       },
       timeout: 5000,
     })
