@@ -133,7 +133,7 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
           expanded={lunchExpanded}
           onPress={() => setLunchExpanded(!lunchExpanded)}
         >
-          {milkshake.length &&
+          {milkshake.length ? (
             milkshake?.map((el, key) =>
               restaurant.placeId == userPlaceId ? (
                 <View key={key}>
@@ -147,12 +147,15 @@ export const RestaurantDetailScreen = ({ route, navigation }) => {
                   />
                 </View>
               ) : (
-                <View>
+                <View key={key}>
                   <List.Item title={el?.toString()} />
                   <Divider />
                 </View>
               )
-            )}
+            )
+          ) : (
+            <Text>Ta lodziarnia z nami nie współpracuje jeszcze !</Text>
+          )}
         </List.Accordion>
       </ScrollView>
       <Spacer position="bottom" size="large">

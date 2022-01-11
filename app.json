@@ -21,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.k88.Icespotting"
     }
   }
 }
